@@ -1,3 +1,14 @@
+$day-size: 100px;
+$border: 1px;
+$gap: 1px;
+$padding: 10px;
+$columns: 7;
+$hover-color: #ffbfcb;
+$day-bg: #eee;
+$font: Arial, sans-serif;
+$font-size: 30px;
+$hover-shift: -20px;
+
 * {
   box-sizing: border-box;
 }
@@ -10,16 +21,18 @@ body {
   align-items: center;
   height: 100vh;
 
-  font-family: Arial, sans-serif;
-  font-size: 30px;
+  font-family: $font;
+  font-size: $font-size;
 }
 
 .calendar {
   display: flex;
   flex-wrap: wrap;
-  gap: 1px;
-  width: 726px;
-  padding: 10px;
+  gap: $gap;
+  width: calc(
+    #{$columns * $day-size} + #{($columns - 1) * $gap} + #{2 * $padding}
+  );
+  padding: $padding;
 }
 
 @for $i from 1 through 31 {
@@ -29,10 +42,10 @@ body {
 }
 
 .calendar__day {
-  width: 100px;
-  height: 100px;
-  background-color: #eee;
-  border: 1px solid #000;
+  width: $day-size;
+  height: $day-size;
+  background-color: $day-bg;
+  border: $border solid #000;
 
   display: flex;
   justify-content: center;
@@ -41,16 +54,16 @@ body {
   transition-duration: 0.5s;
 
   &::before {
-    font-size: 30px;
-    font-family: Arial, sans-serif;
+    font-size: $font-size;
+    font-family: $font;
   }
 }
 
 .calendar__day:hover {
   cursor: pointer;
-  background-color: #ffbfcb;
+  background-color: $hover-color;
   transition-duration: 0.5s;
-  transform: translateY(-20px);
+  transform: translateY($hover-shift);
 }
 
 $start-days: (
@@ -65,7 +78,7 @@ $start-days: (
 
 @each $day, $index in $start-days {
   .calendar--start-day-#{$day} .calendar__day:first-child {
-    margin-left: $index * 101px;
+    margin-left: calc($index * ($day-size + $gap));
   }
 }
 
